@@ -1,8 +1,8 @@
-resource "aws_ebs_volume" "example" {
+resource "aws_ebs_volume" "volume_example" {
   availability_zone = "us-west-2a"
   size              = 40
 
   tags = {
-    Name = "HelloWorld"
+    Name = "volume_name"
   }
 }
