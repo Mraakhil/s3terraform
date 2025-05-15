@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git url: 'https://github.com/yourusername/aws-infra-jenkins.git'
+                git url: 'https://github.com/Mraakhil/s3terraform.git'
             }
         }
 
