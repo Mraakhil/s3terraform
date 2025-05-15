@@ -26,13 +26,13 @@ pipeline {
         stage('Terraform Apply Based on Choice') {
             steps {
                 script {
-                    if (params.SERVICE == 's3') {
-                        sh 'terraform ${action} -auto-approve -target=aws_s3_bucket.s3bucketmss'
-                    } else if (params.SERVICE =='ebs'{
-                    sh 'terraform apply -auto-approve -target=aws_ebs_volume.volume_example'
-                    } else if (params.SERVICE == 'efs') {
-                        sh 'terraform ${action} -auto-approve -target=aws_efs_file_system.my_efs'
-                    }
+                        if (params.SERVICE == 's3') {
+                            sh "terraform ${params.action} -auto-approve -target=aws_s3_bucket.s3bucketmss"
+                        } else if (params.SERVICE == 'ebs') {
+                            sh "terraform ${params.action} -auto-approve -target=aws_ebs_volume.volume_example"
+                        } else if (params.SERVICE == 'efs') {
+                            sh "terraform ${params.action} -auto-approve -target=aws_efs_file_system.my_efs"
+                        }
                 }
             }
         }
