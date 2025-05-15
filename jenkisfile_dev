@@ -2,11 +2,10 @@ pipeline {
     agent any
 
     parameters {
-        choice(
-            name: 'SERVICE',
-            choices: ['s3', 'ebs', 'efs'],
-            description: 'Select the AWS service you want to create'
-        )
+        choice(name: 'SERVICE',choices: ['s3', 'ebs', 'efs'],description: 'Select the AWS service you want to create')
+        choise(name: 'action', choices: ['apply', 'destroy'], description: 'Choose the action apply or destroy')
+      
+    
     }
 
     stages {
