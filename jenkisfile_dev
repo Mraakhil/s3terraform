@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'SERVICE',
+            choices: ['s3', 'ebs', 'efs'],
+            description: 'Select the AWS service you want to create'
+        )
+    }
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git url: 'https://github.com/yourusername/aws-infra-jenkins.git'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+
+        stage('Terraform Apply Based on Choice') {
+            steps {
+                script {
+                    if (params.SERVICE == 's3') {
+                        sh 'terraform apply -auto-approve -target=aws_s3_bucket.my_bucket'
+                    } else if (params.SERVICE == 'ebs') {
+                        sh 'terraform apply -auto-approve -target=aws_ebs_volume.my_volume'
+                    } else if (params.SERVICE == 'efs') {
+                        sh 'terraform apply -auto-approve -target=aws_efs_file_system.my_efs'
+                    }
+                }
+            }
+        }
+    }
+}
