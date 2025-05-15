@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git url: 'https://github.com/Mraakhil/s3terraform.git'
+                git url: 'https://github.com/Mraakhil/dockertheend.git', branch: 'dev'
             }
         }
 
