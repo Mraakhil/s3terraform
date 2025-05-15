@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         choice(name: 'SERVICE',choices: ['s3', 'ebs', 'efs'],description: 'Select the AWS service you want to create')
-        choise(name: 'action', choices: ['apply', 'destroy'], description: 'Choose the action apply or destroy')
+        choice(name: 'action', choices: ['apply', 'destroy'], description: 'Choose the action apply or destroy')
       
     
     }
