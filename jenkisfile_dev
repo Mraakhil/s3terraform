@@ -25,11 +25,11 @@ pipeline {
             steps {
                 script {
                     if (params.SERVICE == 's3') {
-                        sh 'terraform apply -auto-approve -target=aws_s3_bucket.s3bucketmss'
+                        sh 'terraform ${action} -auto-approve -target=aws_s3_bucket.s3bucketmss'
                     } else if (params.SERVICE == 'ebs') {
-                        sh 'terraform apply -auto-approve -target=aws_ebs_volume.volume_example'
+                        sh 'terraform ${action} -auto-approve -target=aws_ebs_volume.volume_example'
                     } else if (params.SERVICE == 'efs') {
-                        sh 'terraform apply -auto-approve -target=aws_efs_file_system.my_efs'
+                        sh 'terraform ${action} -auto-approve -target=aws_efs_file_system.my_efs'
                     }
                 }
             }
