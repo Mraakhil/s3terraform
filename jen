@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'SERVICE', choices: ['s3', 'ebs', 'efs'], description: 'Select the AWS service you want to create')
+        choice(name: 'action', choices: ['apply', 'destroy'], description: 'Choose the action: apply or destroy')
+    }
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git url: 'https://github.com/Mraakhil/dockertheend.git', branch: 'dev'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                dir('VOLUME') {
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('Terraform Action Based on Choice') {
+            steps {
+                dir('VOLUME') {
+                    script {
+                        if (params.SERVICE == 's3') {
+                            sh "terraform ${params.action} -auto-approve -target=aws_s3_bucket.s3bucketmss"
+                        } else if (params.SERVICE == 'ebs') {
+                            sh "terraform ${params.action} -auto-approve -target=aws_ebs_volume.volume_example"
+                        } else if (params.SERVICE == 'efs') {
+                            sh "terraform ${params.action} -auto-approve -target=aws_efs_file_system.my_efs"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
