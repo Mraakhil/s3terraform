@@ -17,7 +17,9 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                sh 'terraform init'
+                    dir('VOLUME') {
+                    sh 'terraform init'
+                }
             }
         }
 
@@ -26,8 +28,9 @@ pipeline {
                 script {
                     if (params.SERVICE == 's3') {
                         sh 'terraform ${action} -auto-approve -target=aws_s3_bucket.s3bucketmss'
-                    } else if (params.SERVICE == 'ebs') {
-                        sh 'terraform ${action} -auto-approve -target=aws_ebs_volume.volume_example'
+                    } else if dir('VOLUME') {
+                    sh 'terraform apply -auto-approve -target=aws_ebs_volume.volume_example'
+                }
                     } else if (params.SERVICE == 'efs') {
                         sh 'terraform ${action} -auto-approve -target=aws_efs_file_system.my_efs'
                     }
