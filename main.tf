@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "s3bucketmss" {
+resource "aws_s3_bucket" "s3bucketexample" {
 
 bucket = "s3-bucket-msdhoniisakingofindia"
 
