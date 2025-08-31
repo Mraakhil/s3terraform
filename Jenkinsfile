@@ -4,39 +4,40 @@ pipeline {
         TERRAFORM_HOME = tool name: 'Terraform', type: 'hudson.plugins.tfs.TerraformInstallation'
     }
 
-     parameters {
-        choise(name: 'action', choices: ['apply', 'destroy'], description: 'Choose the action apply or destroy')
-      
+    parameters {
+        choice(name: 'action', choices: ['apply', 'destroy'], description: 'Choose the action apply or destroy')
     }
 
     stages {
-        stage('checkout') {
+        stage('Checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mraakhil/s3terraform.git']])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/Mraakhil/s3terraform.git']]])
             }
         }
-        stage ("terraform init") {
+
+        stage('Terraform Init') {
             steps {
-                sh ('terraform init') 
+                sh "${TERRAFORM_HOME}/terraform init"
             }
         }   
-         stage ("terraform fmt") {
+
+        stage('Terraform Fmt') {
             steps {
-                sh ('terraform fmt') 
+                sh "${TERRAFORM_HOME}/terraform fmt"
             }
         }  
-        stage ("terraform validate") {
+
+        stage('Terraform Validate') {
             steps {
-                sh ('terraform validate') 
+                sh "${TERRAFORM_HOME}/terraform validate"
             }
         }  
-        
-        stage ("terraform Action") {
+
+        stage('Terraform Action') {
             steps {
-                echo "Terraform action is --> ${action}"
-                sh ('terraform ${action} --auto-approve') 
-           }
+                echo "Terraform action is --> ${params.action}"
+                sh "${TERRAFORM_HOME}/terraform ${params.action} --auto-approve"
+            }
         }
     }
-    
 }
