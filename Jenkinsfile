@@ -1,5 +1,8 @@
 pipeline {
-    agent any
+    agent any 
+    environment {
+        TERRAFORM_HOME = tool name: 'Terraform', type: 'hudson.plugins.tfs.TerraformInstallation'
+    }
 
      parameters {
         choise(name: 'action', choices: ['apply', 'destroy'], description: 'Choose the action apply or destroy')
