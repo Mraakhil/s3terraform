@@ -1,15 +1,21 @@
 resource "aws_s3_bucket" "example" {
+  bucket = "s3-bucket-msdhoniisakingofindia"
+  acl    = "private"
 
-bucket = "s3-bucket-msdhoniisakingofindia"
+  versioning {
+    enabled = true
+  }
 
-acl = "private"
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
 
-versioning {
-
-enabled = true
-
-}
-
-
-
+  tags = {
+    Name        = "MyBucket"
+    Environment = "Dev"
+  }
 }
