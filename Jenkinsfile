@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mraakhil/s3terraform.git']])
+                checkout scmGit(branches: [[name: '*/dublicate.main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mraakhil/s3terraform.git']])
             }
         }
         stage ("terraform init") {
