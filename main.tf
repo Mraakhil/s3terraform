@@ -1,4 +1,4 @@
-provider "aws" {
+provider {
   region = var.aws_region
 }
 
