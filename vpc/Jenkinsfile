@@ -10,11 +10,10 @@ pipeline {
     }
     stage('Init') {
             steps {
-                dir('vpc') {
                     sh 'terraform init'
                 }
             }
-        }  
+        
 
     
 }
