@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git pull') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Mraakhil/s3terraform.git
+            }
+        }
+    }
+}
